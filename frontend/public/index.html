@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2B6CB0" />
+    <title>HelloTalk Clone</title>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <style>
+      :root {
+        --chakra-blue: #2B6CB0;
+        --chakra-blue-light: #3182ce;
+        --chakra-yellow: #ECC94B;
+        --chakra-bg: #F7FAFC;
+        --chakra-card: #fff;
+        --chakra-radius: 16px;
+        --chakra-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+        --chakra-font: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: var(--chakra-bg);
+        color: #2D3748;
+        font-family: var(--chakra-font);
+        min-height: 100vh;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chakra-splash-card {
+        background: var(--chakra-card);
+        color: #2B6CB0;
+        border-radius: var(--chakra-radius);
+        box-shadow: var(--chakra-shadow);
+        padding: 2.5rem 2rem 2rem 2rem;
+        max-width: 420px;
+        width: 100%;
+        margin: 2rem auto;
+        text-align: center;
+        position: relative;
+      }
+      .chakra-splash-logo {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: var(--chakra-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--chakra-yellow);
+        margin: 0 auto 1.2rem auto;
+        box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
+      }
+      .chakra-splash-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1px;
+        color: #2B6CB0;
+      }
+      .chakra-splash-desc {
+        font-size: 1.1rem;
+        color: #4A5568;
+        margin-bottom: 1.6rem;
+      }
+      .chakra-splash-btn {
+        background: var(--chakra-yellow);
+        color: #2B6CB0;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        padding: 0.9rem 2rem;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+      .chakra-splash-btn:hover, .chakra-splash-btn:focus {
+        background: #FAF089;
+        color: #2B6CB0;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .chakra-splash-card {
+          padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+        }
+        .chakra-splash-title {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="chakra-splash-card">
+        <div class="chakra-splash-logo">HT</div>
+        <div class="chakra-splash-title">Welcome to HelloTalk Clone</div>
+        <div class="chakra-splash-desc">
+          Practice languages, chat, and join <span style="color:var(--chakra-yellow);font-weight:600;">Voice Rooms</span> in a modern, vibrant community.
+        </div>
+        <button class="chakra-splash-btn" onclick="window.location.reload();">Launch App</button>
+      </div>
+    </div>
+    <noscript>
+      <div style="color:var(--chakra-yellow);background:var(--chakra-blue);padding:1rem;text-align:center;">
+        You need to enable JavaScript to run this app.
+      </div>
+    </noscript>
+  </body>
+</html>
