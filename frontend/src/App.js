@@ -51,6 +51,8 @@ export default function App() {
     localStorage.clear();
   };
 
+  const { colorMode, toggleColorMode } = useColorMode();
+
   if (!loggedIn) {
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
@@ -64,7 +66,6 @@ export default function App() {
   }
 
   // Navigation bar
-  const { colorMode, toggleColorMode } = useColorMode();
 
   const navBar = (
     <AppBar position="static">
