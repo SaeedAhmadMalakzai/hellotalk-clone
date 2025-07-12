@@ -30,8 +30,8 @@ export default function VoiceRoom({ roomId, userId, role }) {
         setStageRequests(prev => [...prev, userId]);
       });
 
-      socket.on('stage-approved', ({ userId }) => {
-        if (userId === userId) {
+      socket.on('stage-approved', ({ userId: approvedUserId }) => {
+        if (approvedUserId === userId) {
           // Upgrade to stage: renegotiate peers
         }
       });
