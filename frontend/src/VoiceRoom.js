@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import axios from 'axios';
+import { Box, Button, Text, Input, Stack } from '@chakra-ui/react';
 
 const socket = io('http://localhost:5001', { transports: ['websocket'] });
 
@@ -65,25 +66,23 @@ export default function VoiceRoom({ roomId, userId, role }) {
   };
 
   return (
-    <div>
-      <h2>Voice Room</h2>
+    <Box p={4}>
+      <Text fontSize="xl" fontWeight="bold" mb={3}>Voice Room</Text>
       <audio ref={myAudio} autoPlay controls />
-      <div>
-        <strong>Stage:</strong> {stage.join(', ')}
-        <br />
-        <strong>Audience:</strong> {audience.join(', ')}
-      </div>
+      <Text mt={2}><strong>Stage:</strong> {stage.join(', ')}</Text>
+      <Text mb={2}><strong>Audience:</strong> {audience.join(', ')}</Text>
       {role === 'audience' && (
-        <button onClick={requestStage}>Request to Speak</button>
+        <Button colorScheme="blue" size="sm" onClick={requestStage} mb={2}>Request to Speak</Button>
       )}
-      <div>
-        <input value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment..." />
-        <button onClick={sendComment}>Send</button>
-        <ul>
-          {comments.map((c, i) => <li key={i}>{c.userId}: {c.comment}</li>)}
-        </ul>
-      </div>
-      {/* Render audio elements for each peer here */}
-    </div>
+      <Stack direction="row" mb={2}>
+        <Input flex={1} value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment..." />
+        <Button onClick={sendComment}>Send</Button>
+      </Stack>
+      <Box as="ul" pl={4}>
+        {comments.map((c, i) => (
+          <Box as="li" key={i}>{c.userId}: {c.comment}</Box>
+        ))}
+      </Box>
+    </Box>
   );
 }
