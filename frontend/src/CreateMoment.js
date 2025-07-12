@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  Box, Button, TextField, Typography, CircularProgress, Alert, Stack, Input
-} from '@mui/material';
+  Box,
+  Button,
+  Input,
+  Textarea,
+  Heading,
+  Stack,
+  Alert,
+  AlertIcon,
+  Spinner,
+  Image
+} from '@chakra-ui/react';
 
 export default function CreateMoment({ userId }) {
   const [content, setContent] = useState('');
@@ -58,57 +67,47 @@ export default function CreateMoment({ userId }) {
 
   return (
     <Box
-      component="form"
+      as="form"
       onSubmit={handleSubmit}
-      sx={{
-        maxWidth: 500,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
+      maxW="500px"
+      mx="auto"
+      mt={4}
+      p={6}
+      bg="white"
+      borderRadius="md"
+      boxShadow="md"
     >
-      <Typography variant="h6" gutterBottom>Create Moment</Typography>
-      <Stack spacing={2}>
-        <TextField
-          label="What's on your mind?"
+      <Heading size="md" mb={4}>Create Moment</Heading>
+      <Stack spacing={3}>
+        <Textarea
+          placeholder="What's on your mind?"
           value={content}
           onChange={e => {
             setContent(e.target.value);
             setServerError('');
             setSuccess(false);
           }}
-          multiline
-          minRows={3}
-          fullWidth
+          minH="120px"
         />
-        <Input
-          type="file"
-          inputProps={{ accept: 'image/*,video/*' }}
-          onChange={handleFileChange}
-          fullWidth
-        />
+        <Input type="file" accept="image/*,video/*" onChange={handleFileChange} />
         {mediaPreview && (
           <Box mt={1}>
-            <img
-              src={mediaPreview}
-              alt="Preview"
-              style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8 }}
-            />
+            <Image src={mediaPreview} alt="Preview" maxH={200} borderRadius="md" />
           </Box>
         )}
-        {serverError && <Alert severity="error">{serverError}</Alert>}
-        {success && <Alert severity="success">Moment posted!</Alert>}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-          fullWidth
-        >
-          {loading ? <CircularProgress size={24} /> : 'Post'}
+        {serverError && (
+          <Alert status="error">
+            <AlertIcon />
+            {serverError}
+          </Alert>
+        )}
+        {success && (
+          <Alert status="success">
+            <AlertIcon />Moment posted!
+          </Alert>
+        )}
+        <Button type="submit" colorScheme="blue" isLoading={loading} width="100%">
+          Post
         </Button>
       </Stack>
     </Box>

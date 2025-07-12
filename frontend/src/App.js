@@ -6,7 +6,9 @@ import CreateMoment from './CreateMoment';
 import InviteEntry from './InviteEntry';
 import VoiceRoomsList from './VoiceRoomList';
 import VoiceRoom from './VoiceRoom';
-import { AppBar, Toolbar, Button, Typography, Box, Container, Stack } from '@mui/material';
+import { AppBar, Toolbar, Button, Typography, Box, Container, Stack, IconButton } from '@mui/material';
+import { useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import './App.css';
 import axios from 'axios';
 
@@ -62,6 +64,8 @@ export default function App() {
   }
 
   // Navigation bar
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const navBar = (
     <AppBar position="static">
       <Toolbar>
@@ -71,7 +75,19 @@ export default function App() {
         <Button color="inherit" onClick={() => setView('chat')}>Chat</Button>
         <Button color="inherit" onClick={() => setView('moments')}>Moments</Button>
         <Button color="inherit" onClick={() => setView('voiceRooms')}>Voice Rooms</Button>
-        {user?.isAdmin && <Button color="inherit" onClick={() => setView('invite')}>Invite Codes</Button>}
+        {user?.isAdmin && (
+          <Button color="inherit" onClick={() => setView('invite')}>
+            Invite Codes
+          </Button>
+        )}
+        <IconButton
+          size="small"
+          color="inherit"
+          onClick={toggleColorMode}
+          sx={{ ml: 1 }}
+        >
+          {colorMode === 'light' ? <FaMoon /> : <FaSun />}
+        </IconButton>
         <Button color="inherit" onClick={handleLogout}>Logout</Button>
       </Toolbar>
     </AppBar>
