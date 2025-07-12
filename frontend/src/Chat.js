@@ -2,8 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import {
-  Box, Button, TextField, Typography, Paper, Stack, CircularProgress, Alert, List, ListItem, ListItemText
-} from '@mui/material';
+  Box,
+  Button,
+  Input,
+  Text,
+  Flex,
+  VStack,
+  Spinner,
+  Alert,
+  AlertIcon,
+  List,
+  ListItem
+} from '@chakra-ui/react';
 
 const socket = io('http://localhost:5001');
 
@@ -53,64 +63,49 @@ export default function Chat({ userId, receiverId }) {
   };
 
   return (
-    <Box
-      sx={{
-        maxWidth: 500,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
-    >
-      <Typography variant="h6" gutterBottom>Chat</Typography>
-      <Paper sx={{ maxHeight: 300, overflowY: 'auto', mb: 2, p: 2 }}>
+    <Box maxW="500px" mx="auto" mt={4} p={6} bg="white" borderRadius="md" boxShadow="md">
+      <Text fontSize="xl" fontWeight="bold" mb={3}>Chat</Text>
+      <Box maxH="300px" overflowY="auto" mb={2} p={2} borderWidth="1px" borderRadius="md">
         {loading ? (
-          <Stack alignItems="center"><CircularProgress /></Stack>
+          <Flex justify="center"><Spinner /></Flex>
         ) : error ? (
-          <Alert severity="error">{error}</Alert>
+          <Alert status="error"><AlertIcon />{error}</Alert>
         ) : (
-          <List>
+          <List spacing={2}>
             {messages.map((msg, idx) => (
-              <ListItem
-                key={idx}
-                sx={{
-                  justifyContent: msg.senderId === userId ? 'flex-end' : 'flex-start'
-                }}
-              >
-                <ListItemText
-                  primary={msg.content}
-                  secondary={new Date(msg.created_at).toLocaleTimeString()}
-                  sx={{
-                    textAlign: msg.senderId === userId ? 'right' : 'left',
-                    bgcolor: msg.senderId === userId ? 'primary.light' : 'grey.100',
-                    color: msg.senderId === userId ? 'white' : 'black',
-                    borderRadius: 2,
-                    px: 2,
-                    py: 1,
-                    maxWidth: '70%',
-                    display: 'inline-block'
-                  }}
-                />
+              <ListItem key={idx} textAlign={msg.senderId === userId ? 'right' : 'left'}>
+                <Box
+                  bg={msg.senderId === userId ? 'blue.500' : 'gray.100'}
+                  color={msg.senderId === userId ? 'white' : 'black'}
+                  borderRadius="md"
+                  px={2}
+                  py={1}
+                  display="inline-block"
+                  maxW="70%"
+                >
+                  {msg.content}
+                </Box>
+                <Text fontSize="xs" color="gray.500">
+                  {new Date(msg.created_at).toLocaleTimeString()}
+                </Text>
               </ListItem>
             ))}
             <div ref={messagesEndRef} />
           </List>
         )}
-      </Paper>
-      <Stack direction="row" spacing={2}>
-        <TextField
-          fullWidth
+      </Box>
+      <Flex mt={2} gap={2}>
+        <Input
+          flex={1}
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder="Type a message..."
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
         />
-        <Button variant="contained" color="primary" onClick={sendMessage} disabled={!message.trim()}>
+        <Button colorScheme="blue" onClick={sendMessage} isDisabled={!message.trim()}>
           Send
         </Button>
-      </Stack>
+      </Flex>
     </Box>
   );
 }

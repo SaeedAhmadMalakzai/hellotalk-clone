@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+// Mock axios to avoid parsing ESM in tests
+jest.mock('axios', () => ({ get: jest.fn(), post: jest.fn() }));
+
+test('renders login form by default', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const loginElements = screen.getAllByText(/login/i);
+  expect(loginElements.length).toBeGreaterThan(0);
 });

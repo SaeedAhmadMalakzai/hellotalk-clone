@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Box, Button, Typography, CircularProgress, Alert, List, ListItem, ListItemText, Stack
-} from '@mui/material';
+  Box,
+  Button,
+  Text,
+  Alert,
+  AlertIcon,
+  List,
+  ListItem,
+  Stack,
+  Spinner
+} from '@chakra-ui/react';
 
 export default function VoiceRoomsList({ onJoin }) {
   const [rooms, setRooms] = useState([]);
@@ -30,40 +38,23 @@ export default function VoiceRoomsList({ onJoin }) {
   }, []);
 
   return (
-    <Box
-      sx={{
-        maxWidth: 600,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
-    >
-      <Typography variant="h5" gutterBottom>Active Voice Rooms</Typography>
+    <Box maxW="600px" mx="auto" mt={4} p={6} bg="white" borderRadius="md" boxShadow="md">
+      <Text fontSize="lg" fontWeight="bold" mb={3}>Active Voice Rooms</Text>
       {loading ? (
-        <Stack alignItems="center"><CircularProgress /></Stack>
+        <Stack align="center"><Spinner /></Stack>
       ) : error ? (
-        <Alert severity="error">{error}</Alert>
+        <Alert status="error"><AlertIcon />{error}</Alert>
       ) : rooms.length === 0 ? (
-        <Alert severity="info">No active voice rooms at the moment.</Alert>
+        <Alert status="info"><AlertIcon />No active voice rooms at the moment.</Alert>
       ) : (
-        <List>
+        <List spacing={2}>
           {rooms.map(room => (
-            <ListItem
-              key={room.id}
-              secondaryAction={
-                <Button variant="contained" onClick={() => onJoin(room.id)}>
-                  Join
-                </Button>
-              }
-              sx={{ mb: 1, borderRadius: 2, bgcolor: 'grey.50' }}
-            >
-              <ListItemText
-                primary={room.title}
-                secondary={`Host: ${room.admin_id} • Created: ${new Date(room.created_at).toLocaleString()}`}
-              />
+            <ListItem key={room.id} display="flex" justifyContent="space-between" bg="gray.50" borderRadius="md" p={2}>
+              <Box>
+                <Text fontWeight="medium">{room.title}</Text>
+                <Text fontSize="sm" color="gray.500">Host: {room.admin_id} • Created: {new Date(room.created_at).toLocaleString()}</Text>
+              </Box>
+              <Button colorScheme="blue" onClick={() => onJoin(room.id)}>Join</Button>
             </ListItem>
           ))}
         </List>
