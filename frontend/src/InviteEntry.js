@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  Box, Button, Typography, CircularProgress, Alert, Stack, TextField
-} from '@mui/material';
+  Box,
+  Button,
+  Text,
+  Input,
+  Alert,
+  AlertIcon,
+  Stack,
+  Spinner
+} from '@chakra-ui/react';
 
 export default function InviteEntry({ isAdmin }) {
   const [invite, setInvite] = useState('');
@@ -36,41 +43,26 @@ export default function InviteEntry({ isAdmin }) {
 
   return (
     <Box
-      sx={{
-        maxWidth: 400,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
+      maxW="400px"
+      mx="auto"
+      mt={4}
+      p={6}
+      bg="white"
+      borderRadius="md"
+      boxShadow="md"
     >
-      <Stack spacing={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={generateInvite}
-          disabled={loading}
-          fullWidth
-        >
-          {loading ? <CircularProgress size={24} /> : 'Generate Invite Code'}
+      <Stack spacing={3}>
+        <Button colorScheme="blue" onClick={generateInvite} isLoading={loading} width="100%">
+          Generate Invite Code
         </Button>
-        {invite && (
-          <TextField
-            label="Invite Code"
-            value={invite}
-            InputProps={{
-              readOnly: true,
-            }}
-            fullWidth
-            margin="normal"
-          />
+        {invite && <Input value={invite} isReadOnly />}
+        {error && (
+          <Alert status="error">
+            <AlertIcon />
+            {error}
+          </Alert>
         )}
-        {error && <Alert severity="error">{error}</Alert>}
-        <Typography variant="body2" color="textSecondary">
-          Only admins can generate invite codes.
-        </Typography>
+        <Text fontSize="sm" color="gray.500">Only admins can generate invite codes.</Text>
       </Stack>
     </Box>
   );
