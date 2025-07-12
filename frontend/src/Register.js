@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  Box, Button, TextField, Typography, CircularProgress, Alert, Stack
-} from '@mui/material';
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Heading,
+  Stack,
+  Alert,
+  AlertIcon,
+  Spinner
+} from '@chakra-ui/react';
 
 export default function Register({ onRegister }) {
   const [form, setForm] = useState({
@@ -64,86 +73,50 @@ export default function Register({ onRegister }) {
 
   return (
     <Box
-      component="form"
+      as="form"
       onSubmit={handleSubmit}
-      sx={{
-        maxWidth: 400,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
+      maxW="400px"
+      mx="auto"
+      mt={4}
+      p={6}
+      bg="white"
+      borderRadius="md"
+      boxShadow="md"
     >
-      <Typography variant="h5" gutterBottom>Register</Typography>
-      <Stack spacing={2}>
-        <TextField
-          label="Email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          error={!!errors.email}
-          helperText={errors.email}
-          autoComplete="email"
-          fullWidth
-          required
-        />
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          value={form.password}
-          onChange={handleChange}
-          error={!!errors.password}
-          helperText={errors.password}
-          autoComplete="new-password"
-          fullWidth
-          required
-        />
-        <TextField
-          label="Username"
-          name="username"
-          value={form.username}
-          onChange={handleChange}
-          error={!!errors.username}
-          helperText={errors.username}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Invite Code"
-          name="inviteCode"
-          value={form.inviteCode}
-          onChange={handleChange}
-          error={!!errors.inviteCode}
-          helperText={errors.inviteCode}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Native Language"
-          name="native_language"
-          value={form.native_language}
-          onChange={handleChange}
-          fullWidth
-        />
-        <TextField
-          label="Learning Language"
-          name="learning_language"
-          value={form.learning_language}
-          onChange={handleChange}
-          fullWidth
-        />
-        {serverError && <Alert severity="error">{serverError}</Alert>}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-          fullWidth
-        >
-          {loading ? <CircularProgress size={24} /> : 'Register'}
+      <Heading size="md" mb={4}>Register</Heading>
+      <Stack spacing={3}>
+        <FormControl isRequired isInvalid={!!errors.email}>
+          <FormLabel>Email</FormLabel>
+          <Input name="email" value={form.email} onChange={handleChange} autoComplete="email" />
+        </FormControl>
+        <FormControl isRequired isInvalid={!!errors.password}>
+          <FormLabel>Password</FormLabel>
+          <Input type="password" name="password" value={form.password} onChange={handleChange} autoComplete="new-password" />
+        </FormControl>
+        <FormControl isRequired isInvalid={!!errors.username}>
+          <FormLabel>Username</FormLabel>
+          <Input name="username" value={form.username} onChange={handleChange} />
+        </FormControl>
+        <FormControl isRequired isInvalid={!!errors.inviteCode}>
+          <FormLabel>Invite Code</FormLabel>
+          <Input name="inviteCode" value={form.inviteCode} onChange={handleChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Native Language</FormLabel>
+          <Input name="native_language" value={form.native_language} onChange={handleChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Learning Language</FormLabel>
+          <Input name="learning_language" value={form.learning_language} onChange={handleChange} />
+        </FormControl>
+        {serverError && (
+          <Alert status="error">
+            <AlertIcon />
+            {serverError}
+          </Alert>
+        )}
+        <Button type="submit" colorScheme="blue" isLoading={loading} width="100%">
+          Register
         </Button>
       </Stack>
     </Box>

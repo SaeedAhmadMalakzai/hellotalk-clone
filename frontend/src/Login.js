@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  Box, Button, TextField, Typography, CircularProgress, Alert, Stack
-} from '@mui/material';
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Heading,
+  Stack,
+  Alert,
+  AlertIcon,
+  Spinner
+} from '@chakra-ui/react';
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -38,49 +47,34 @@ export default function Login({ onLogin }) {
 
   return (
     <Box
-      component="form"
+      as="form"
       onSubmit={handleSubmit}
-      sx={{
-        maxWidth: 400,
-        mx: 'auto',
-        mt: 4,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
+      maxW="400px"
+      mx="auto"
+      mt={4}
+      p={6}
+      bg="white"
+      borderRadius="md"
+      boxShadow="md"
     >
-      <Typography variant="h5" gutterBottom>Login</Typography>
-      <Stack spacing={2}>
-        <TextField
-          label="Email"
-          type="email"
-          value={email}
-          onChange={handleInputChange(setEmail)}
-          autoComplete="email"
-          required
-          fullWidth
-        />
-        <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={handleInputChange(setPassword)}
-          autoComplete="current-password"
-          required
-          fullWidth
-        />
-        {/* Uncomment below to add a "Forgot Password?" link in the future */}
-        {/* <Button variant="text" color="primary" size="small">Forgot Password?</Button> */}
-        {serverError && <Alert severity="error">{serverError}</Alert>}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-          fullWidth
-        >
-          {loading ? <CircularProgress size={24} /> : 'Login'}
+      <Heading size="md" mb={4}>Login</Heading>
+      <Stack spacing={3}>
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input type="email" value={email} onChange={handleInputChange(setEmail)} autoComplete="email" />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Password</FormLabel>
+          <Input type="password" value={password} onChange={handleInputChange(setPassword)} autoComplete="current-password" />
+        </FormControl>
+        {serverError && (
+          <Alert status="error">
+            <AlertIcon />
+            {serverError}
+          </Alert>
+        )}
+        <Button type="submit" colorScheme="blue" isLoading={loading} width="100%">
+          Login
         </Button>
       </Stack>
     </Box>
